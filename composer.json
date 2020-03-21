@@ -1,0 +1,12 @@
+{
+    "name": "root/woocommerce-vimeo",
+    "require": {
+        "vimeo/vimeo-api": "^3.0"
+    },
+    "authors": [
+        {
+            "name": "Vincent Astolfi",
+            "email": "astolfivincent@gmail.com"
+        }
+    ]
+}

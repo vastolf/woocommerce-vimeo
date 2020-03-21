@@ -1,0 +1,33 @@
+.wc-vimeo__cache-clear-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffdada;
+    padding: 1rem;
+    color: #2f1313;
+    border: 1px solid #6f3634;
+    border-radius: 3px;
+    margin: 1.25rem 0 1rem;
+}
+
+.wp-core-ui button.wc-vimeo__cache-clear {
+    margin-right: 1rem;
+    border: 1px solid #4e120f;
+    background: #863935;
+    color: #fff;
+}
+
+.wp-core-ui button.wc-vimeo__cache-clear:hover,
+.wp-core-ui button.wc-vimeo__cache-clear:active,
+.wp-core-ui button.wc-vimeo__cache-clear:focus {
+    border: 1px solid #7f3f3d;
+    background: #b75854;
+    color: #fff;
+}
+
+#woocommerce-product-data ul.wc-tabs li.vimeo_options a:before {
+    font-family: Dashicons;
+    content: "\f126"; /* video icon */
+    color: #2474aa;
+    vertical-align: middle;
+}
