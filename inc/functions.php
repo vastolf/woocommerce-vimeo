@@ -4,7 +4,7 @@ use Vimeo\Vimeo;
 // Returns transient duration setting from WooCommerce Vimeo options page
 // If nothing is set, it uses 15 minutes as the default.
 // If set to 0, it will default to 1 minute (60 seconds)
-function woocommerce_vimeo_get_transient_duration() {
+function wc_vimeo_get_transient_duration() {
     $transientDuration = get_option('wc_settings_vimeo_transient_duration');
     if ($transientDuration) {
         $transientDuration = intval($transientDuration);
@@ -19,7 +19,7 @@ function woocommerce_vimeo_get_transient_duration() {
 }
 
 // Returns current set values for the Vimeo API configuration
-function woocommerce_vimeo_get_config_options() {
+function wc_vimeo_get_config_options() {
     $options = [];
     $clientID = get_option('wc_settings_vimeo_client_id');
     $clientSecret = get_option('wc_settings_vimeo_client_secret');
@@ -36,8 +36,8 @@ function woocommerce_vimeo_get_config_options() {
 // Directly requests video data on the current user,
 // Using the configuration options for Vimeo API
 // And returns the data in the body of the response
-function woocommerce_vimeo_my_videos_request() {
-    $configOptions = woocommerce_vimeo_get_config_options();
+function wc_vimeo_my_videos_request() {
+    $configOptions = wc_vimeo_get_config_options();
     if ($configOptions) {
         $client = new Vimeo($configOptions['client_id'], $configOptions['client_secret'], $configOptions['access_token']);
         $response = $client->request('/me/videos', array(), 'GET');
@@ -52,7 +52,7 @@ function woocommerce_vimeo_my_videos_request() {
 }
 
 // Recieves a $video array, and returns it with the extraneous data removed
-function woocommerce_vimeo_build_parsed_video($video) {
+function wc_vimeo_build_parsed_video($video) {
     if (is_array($video) && !empty($video)) {
         $videoParsed = [];
         $videoParsed['id'] = preg_replace('/[^0-9]/', '', $video['uri']);
@@ -70,15 +70,15 @@ function woocommerce_vimeo_build_parsed_video($video) {
     return false;
 }
 
-// Get video data from woocommerce_vimeo_my_videos_request
-// Parse the data using woocommerce_vimeo_build_parsed_video
+// Get video data from wc_vimeo_my_videos_request
+// Parse the data using wc_vimeo_build_parsed_video
 // Create a new array of parsed videos, with their key set to their video ID
-function woocommerce_vimeo_parse_video_data($encode = false) {
-    $data = woocommerce_vimeo_my_videos_request();
+function wc_vimeo_parse_video_data($encode = false) {
+    $data = wc_vimeo_my_videos_request();
     if ($data && !empty($data)) {
         $videoData = [];
         foreach($data as $video) {
-            $videoParsed = woocommerce_vimeo_build_parsed_video($video);
+            $videoParsed = wc_vimeo_build_parsed_video($video);
             if ($videoParsed && !empty($videoParsed)) {
                 $videoID = $videoParsed['id'];
                 $videoData[$videoID] = $videoParsed;
@@ -100,14 +100,14 @@ function woocommerce_vimeo_parse_video_data($encode = false) {
 // Sets and returns the main Vimeo transient, json_decoded (an object), which contains
 // all videos & video data under the account. All other transients
 // for individual videos are build from this transient
-function woocommerce_vimeo_get_set_video_transient() {
-    $transientName = 'woocommerce_vimeo_videos_main_transient';
+function wc_vimeo_get_set_video_transient() {
+    $transientName = 'wc_vimeo_videos_main_transient';
     $videoTransient = get_transient($transientName);
-    $duration = woocommerce_vimeo_get_transient_duration();
+    $duration = wc_vimeo_get_transient_duration();
     if ($videoTransient != false) {
         return json_decode($videoTransient); // Return JSON decoded transient
     } else {
-        $videoData = woocommerce_vimeo_parse_video_data(true);
+        $videoData = wc_vimeo_parse_video_data(true);
         set_transient($transientName, $videoData, $duration);
         return json_decode($videoData); // Return video data unencoded
     }
@@ -115,13 +115,13 @@ function woocommerce_vimeo_get_set_video_transient() {
 }
 
 // Sets and returns a transient, json_decoded (an object), for an individual video
-// Is built from the transient created in woocommerce_vimeo_get_set_video_transient
-function woocommerce_vimeo_get_set_video_item_transient($vid = false) {
-    $vimeoTransient = woocommerce_vimeo_get_set_video_transient();
-    $duration = woocommerce_vimeo_get_transient_duration();
+// Is built from the transient created in wc_vimeo_get_set_video_transient
+function wc_vimeo_get_set_video_item_transient($vid = false) {
+    $vimeoTransient = wc_vimeo_get_set_video_transient();
+    $duration = wc_vimeo_get_transient_duration();
     if ($vimeoTransient && !empty($vimeoTransient)) {
         foreach($vimeoTransient as $key => $value) {
-            $transientName = 'woocommerce_vimeo_video_'.$key;
+            $transientName = 'wc_vimeo_video_'.$key;
             $video = get_transient($transientName);
 
             if ($video != false) {
@@ -139,12 +139,12 @@ function woocommerce_vimeo_get_set_video_item_transient($vid = false) {
     return false;
 }
 
-// Get video transient using woocommerce_vimeo_get_set_video_transient
+// Get video transient using wc_vimeo_get_set_video_transient
 // Turn it into a usable array for WordPress
 // When setting the video select dropdown's options on the Product edit page
-function woocommerce_vimeo_get_product_options() {
+function wc_vimeo_get_product_options() {
     $options = [];
-    $videoData = woocommerce_vimeo_get_set_video_transient();
+    $videoData = wc_vimeo_get_set_video_transient();
     if ($videoData && !empty($videoData)) {
         foreach ($videoData as $key => $value) {
             $options[$key] = $value->name;
@@ -154,6 +154,22 @@ function woocommerce_vimeo_get_product_options() {
         return $options;
     }
     return false;
+}
+
+
+// Clears all active Transients set by this plugin
+function wc_vimeo_clear_all_transients() {
+    $options = wc_vimeo_get_product_options();
+    $duration = wc_vimeo_get_transient_duration() / 60;
+    if (false !== get_transient('wc_vimeo_videos_main_transient')) {
+        delete_transient('wc_vimeo_videos_main_transient');
+    }
+    foreach($options as $key => $value) {
+        $transientName = 'wc_vimeo_video_'.$key;
+        if (false !== get_transient($transientName)) {
+            delete_transient($transientName);
+        }
+    }
 }
 
 ?>
