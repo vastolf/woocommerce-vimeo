@@ -4,7 +4,7 @@ Donate link: https://paypal.com/astolfivincent
 Tags: vimeo, woocommerce, video, sell
 Requires at least: 4.6
 Tested up to: 5.3.2
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +57,7 @@ Products with Vimeo videos selected have a lot of extra meta data associated wit
 * `wc_vimeo_name`: The name, or title of the Vimeo video
 * `wc_vimeo_uri`: The uri of the Vimeo video (this is the link without the leading domain, e.g. /18293829)
 * `wc_vimeo_description`: The description of the video, if set
+* `wc_vimeo_duration`: The duration of the video, in seconds
 * `wc_vimeo_status`: The status of the video, if it is available to be viewed
 
 = How can I use this meta data / make it available to my customers once they've purchased my Products? =
@@ -97,7 +98,13 @@ You can change the cache clear interval or clear the cache manually at [https://
 = 0.0.1 =
 * Original release
 
+= 0.0.2 =
+* vimeo/vimeo-api update
+
 == Upgrade Notice ==
 
-= 1.0.1 =
+= 0.0.1 =
 Plugin inception, original release
+
+= 0.0.2 =
+Vimeo made a major update to their PHP API, so we need to update or communication with the Vimeo API will be broken.

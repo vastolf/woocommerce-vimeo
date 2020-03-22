@@ -3,7 +3,7 @@
 *	Plugin Name: WooCommerce Vimeo
 *	Plugin URI: https://www.nueue.net/
 *	Description: WooCommerce Vimeo
-*	Version: 0.0.1
+*	Version: 0.0.2
 *	Author: Vincent Astolfi
 *   Author URI: https://nueue.net/
 *	Text Domain: woocommerce-vimeo
