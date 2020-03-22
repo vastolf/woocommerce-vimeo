@@ -1,8 +1,8 @@
 <?php
 
 // New Vimeo Tab on WooCommerce settings page
-add_filter( 'woocommerce_product_data_tabs', 'woocommerce_vimeo_add_product_tab' );
-function woocommerce_vimeo_add_product_tab( $product_data_tabs ) {
+add_filter( 'woocommerce_product_data_tabs', 'wc_vimeo_add_product_tab' );
+function wc_vimeo_add_product_tab( $product_data_tabs ) {
 	$product_data_tabs['vimeo'] = array(
 		'label' => __('Vimeo', 'wc-vimeo'),
 		'target' => 'wc_vimeo_id',
@@ -12,8 +12,8 @@ function woocommerce_vimeo_add_product_tab( $product_data_tabs ) {
 }
 
 // New Vimeo Tab content on WooCommerce settings page
-add_action( 'woocommerce_product_data_panels', 'woocommerce_vimeo_tab_content' );
-function woocommerce_vimeo_tab_content() {
+add_action( 'woocommerce_product_data_panels', 'wc_vimeo_tab_content' );
+function wc_vimeo_tab_content() {
 	?>
 	<div id="wc_vimeo_id" class="panel woocommerce_options_panel">
 		<?php
@@ -22,7 +22,7 @@ function woocommerce_vimeo_tab_content() {
 			'wrapper_class' => 'show_if_simple',
 			'label'         => __('Select a video', 'wc-vimeo'),
             'description'   => __('<p>This will be the Vimeo video associated with this product for purchase. The video should be configured to only be <a target="_blank" href="https://vimeo.com/blog/post/eyes-privacy-settings-share-your-videos-securely/">accessible with a password at Vimeo.</a><p>', 'wc-vimeo'),
-			'options' => woocommerce_vimeo_get_product_options()
+			'options' => wc_vimeo_get_product_options()
 		));
 		?>
 	</div>
@@ -30,10 +30,10 @@ function woocommerce_vimeo_tab_content() {
 }
 
 // Save tab settings
-add_action('woocommerce_process_product_meta', 'woocommerce_vimeo_save_tab_settings');
-function woocommerce_vimeo_save_tab_settings($post_id) {
+add_action('woocommerce_process_product_meta', 'wc_vimeo_save_tab_settings');
+function wc_vimeo_save_tab_settings($post_id) {
     if (isset($_POST['wc_vimeo_id'])) {
-		$video = woocommerce_vimeo_get_set_video_item_transient($_POST['wc_vimeo_id']);
+		$video = wc_vimeo_get_set_video_item_transient($_POST['wc_vimeo_id']);
 		if (isset($video->name)) {
 			update_post_meta($post_id, 'wc_vimeo_name', wc_clean($video->name));
 		}

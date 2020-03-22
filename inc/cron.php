@@ -120,7 +120,7 @@ if (!wp_next_scheduled('wp_vimeo_cron_hook')) {
 function wc_vimeo_cron_run_ajax_action_function() {
     $reponse = array();
     if(!empty($_POST['run']) && $_POST['run'] == 'true') {
-        wc_vimeo_clear_all_transients(); // Runs cache clear
+        wc_vimeo_clear_all_transients(); // Runs transient cache clear
         $timeStamp = wp_next_scheduled('wp_vimeo_cron_hook');
         if ($timeStamp) {
             $unschedule = wp_unschedule_event($timeStamp, 'wp_vimeo_schedule', 'wp_vimeo_cron_hook'); // Un-Schedule Cron

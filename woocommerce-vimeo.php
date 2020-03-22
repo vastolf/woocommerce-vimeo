@@ -12,14 +12,16 @@
 *	Support: https://wordpress.org/support/plugin/wc-vimeo/
 */
 
-// Uncomment to enable debug functionality
-require('inc/debug.php');
+/*
+* // Uncomment to enable debug functionality
+* require('inc/debug.php'); // introduces write_log(); function
+*/
 
 require('vendor/autoload.php'); // Composer (includes Vimeo API library vimeo/vimeo-api)
 require('inc/functions.php'); // Main functionality of plugin lives here
 require('inc/scripts.php'); // Minimal CSS & JS imports for Admin
 require('inc/settings.php'); // Woocommerce Admin Settings
-require('inc/woocommerce-product-settings.php'); // Woocommerce Product Settings
 require('inc/cron.php'); // Cron Task / Scheduling / Functionality
+require('inc/woocommerce-product-settings.php'); // Woocommerce Product Settings
 
 ?>

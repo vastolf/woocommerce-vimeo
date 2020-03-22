@@ -161,15 +161,19 @@ function wc_vimeo_get_product_options() {
 function wc_vimeo_clear_all_transients() {
     $options = wc_vimeo_get_product_options();
     $duration = wc_vimeo_get_transient_duration() / 60;
+    $cleared = false;
     if (false !== get_transient('wc_vimeo_videos_main_transient')) {
         delete_transient('wc_vimeo_videos_main_transient');
+        $cleared = true;
     }
     foreach($options as $key => $value) {
         $transientName = 'wc_vimeo_video_'.$key;
         if (false !== get_transient($transientName)) {
             delete_transient($transientName);
+            $cleared = true;
         }
     }
+    return $cleared;
 }
 
 ?>
