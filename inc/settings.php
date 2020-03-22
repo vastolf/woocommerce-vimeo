@@ -117,7 +117,7 @@ class WC_Settings_WooCommerce_Vimeo {
                 'name' => __( 'Vimeo Cron Interval (in minutes)', 'woocommerce-to-vimeo' ),
                 'type' => 'number',
                 'default' => '15',
-                'desc' => 'The Cron task runs automatically on a set interval (in minutes). Set a custom interval for how often your Products\' video data should be compared to the data from Vimeo. (default: 15).<br />',
+                'desc' => 'The Cron task runs automatically on a set interval (in minutes). Set a custom interval for how often your Products\' video data should be compared to the data from Vimeo & updated to reflect and updates from their platform. (default: 15).<br />',
                 'css'  => 'min-width:50px;',
                 'id'   => 'wc_settings_vimeo_cron_interval'
             ),
