@@ -20,7 +20,7 @@ function wc_vimeo_product_video_data($pid = null) {
             if ($videoTransient) {
                 $updated = [];
                 foreach($videoMetaTags as $tag) {
-                    if (isset($videoTransient->{$tag})) {
+                    if (isset($videoTransient->{$tag}) && strlen($videoTransient->{$tag}) > 0) {
                         if (!isset($videoMeta['wc_vimeo_'.$tag]) || $videoMeta['wc_vimeo_'.$tag] != $videoTransient->{$tag}) {
                             update_post_meta($pid, 'wc_vimeo_'.$tag, $videoTransient->{$tag});
                             $updated['wc_vimeo_'.$tag] = [
