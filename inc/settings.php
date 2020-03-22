@@ -109,7 +109,7 @@ class WC_Settings_WooCommerce_Vimeo {
                 'name' => __( 'Cron Options', 'woocommerce-to-vimeo' ),
                 'type' => 'title',
                 'desc' => __('<p>The options below control the Cron task for this plugin. The Cron task updates your Products on a set interval to ensure they have the latest data from Vimeo. This is important in case, for example, the Name or Description of the video at Vimeo changes, as your Products need to be updated to reflect those changes.</p>
-                              <div class="wc-vimeo__cron-run-wrapper"><button id="woocommerce-vimeo-cron-run-1" class="wc-vimeo__cron-run button secondary">Run Vimeo Cron Task</button><span>To increase performance & ensure this plugin\'s compatibility with other plugins that display post meta data, this plugin saves your Vimeo videos\' data on each Product that has it selected. To manually trigger a check of your Products to ensure they have the most up to date data from Vimeo, use this.</span></div>', 'woocommerce'),
+                              <div class="wc-vimeo__cron-run-wrapper"><button id="woocommerce-vimeo-cron-run-1" class="wc-vimeo__cron-run button secondary">Run Vimeo Cron Task</button><span>Warning: This also runs a cache clear; see warning under Cache Options. To ensure this plugin\'s compatibility with other plugins that display post meta data, this plugin saves your videos\' data on each Product that have one selected. To manually trigger an update to ensure products have the most up to date data from Vimeo, use this.</span></div>', 'woocommerce'),
                 'id'   => 'wc_vimeo_cron_configuration'
             ),
 
