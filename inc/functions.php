@@ -121,20 +121,19 @@ function wc_vimeo_get_set_video_item_transient($vid = false) {
     $duration = wc_vimeo_get_transient_duration();
     if ($vimeoTransient && !empty($vimeoTransient)) {
         foreach($vimeoTransient as $key => $value) {
-            $transientName = 'wc_vimeo_video_'.$key;
-            $video = get_transient($transientName);
+            if ($vid && $vid == $key) { // if the $vid provided is this item
+                $transientName = 'wc_vimeo_video_'.$vid;
+                $video = get_transient($transientName);
 
-            if ($video != false) {
-                return json_decode($video); 
-            } else {
-                if ($vid && $vid == $key) { // if the $vid provided is this item
+                if ($video != false) {
+                    return json_decode($video); 
+                } else {
                     $videoData = json_encode($value, JSON_UNESCAPED_SLASHES); // json encode video
                     set_transient($transientName, $videoData, $duration);
                     return $value;
                 }
             }
         }
-        return false;
     }
     return false;
 }
@@ -174,6 +173,17 @@ function wc_vimeo_clear_all_transients() {
         }
     }
     return $cleared;
+}
+
+
+// Updates or Deletes post meta based on if the $value intended
+// to be set isset() and is at least 1 character long
+function wc_vimeo_update_delete_post_meta($post_id, $tag, $value) {
+    if (isset($value) && strlen($value) > 0) {
+		update_post_meta($post_id, $tag, wc_clean($value));
+	} else {
+		delete_post_meta($post_id, $tag);
+	}
 }
 
 ?>

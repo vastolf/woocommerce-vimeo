@@ -24,10 +24,14 @@ function wc_vimeo_product_video_data($pid = null) {
                         if (!isset($videoMeta['wc_vimeo_'.$tag]) || $videoMeta['wc_vimeo_'.$tag] != $videoTransient->{$tag}) {
                             update_post_meta($pid, 'wc_vimeo_'.$tag, $videoTransient->{$tag});
                             $updated['wc_vimeo_'.$tag] = [
-                                'original' => $videoMeta['wc_vimeo_'.$tag],
                                 'update' => $videoTransient->{$tag}
                             ];
                         } 
+                    } else {
+                        delete_post_meta($pid, 'wc_vimeo_'.$tag);
+                        $updated['wc_vimeo_'.$tag] = [
+                            'update' => 'EMPTY - DELETED'
+                        ];
                     }
                 }
                 return $updated;
@@ -102,11 +106,8 @@ function wp_vimeo_cron_exec() {
     $updateMeta = wc_vimeo_update_product_video_meta();
     if ($updateMeta !== false) {
         if (is_array($updateMeta) && !empty($updateMeta)) {
-            write_log('Updates Made!:');
-            write_log($updateMeta);
+            // Do Something (alert)
         }
-    } else {
-        write_log('nothing to update');
     }
 }
 add_action('wp_vimeo_cron_hook', 'wp_vimeo_cron_exec');

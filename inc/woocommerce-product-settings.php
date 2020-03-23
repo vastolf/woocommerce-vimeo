@@ -17,12 +17,20 @@ function wc_vimeo_tab_content() {
 	?>
 	<div id="wc_vimeo_id" class="panel woocommerce_options_panel">
 		<?php
+		$options = [];
+		$options[''] = __( 'Select a Vimeo video', 'wc-vimeo'); // default value
+		$productOptions = wc_vimeo_get_product_options();
+		if (is_array($productOptions) && !empty($productOptions)) {
+			foreach ($productOptions as $key => $value) {
+				$options[$key] = $value;
+			}
+		}
 		woocommerce_wp_select(array(
 			'id'            => 'wc_vimeo_id',
 			'wrapper_class' => 'show_if_simple',
 			'label'         => __('Select a video', 'wc-vimeo'),
             'description'   => __('<p>This will be the Vimeo video associated with this product for purchase. The video should be configured to only be <a target="_blank" href="https://vimeo.com/blog/post/eyes-privacy-settings-share-your-videos-securely/">accessible with a password at Vimeo.</a><p>', 'wc-vimeo'),
-			'options' => wc_vimeo_get_product_options()
+			'options' => $options
 		));
 		?>
 	</div>
@@ -32,30 +40,14 @@ function wc_vimeo_tab_content() {
 // Save tab settings
 add_action('woocommerce_process_product_meta', 'wc_vimeo_save_tab_settings');
 function wc_vimeo_save_tab_settings($post_id) {
+	$tagPrefix = 'wc_vimeo_';
     if (isset($_POST['wc_vimeo_id'])) {
-		$video = wc_vimeo_get_set_video_item_transient($_POST['wc_vimeo_id']);
-		if (isset($video->name)) {
-			update_post_meta($post_id, 'wc_vimeo_name', wc_clean($video->name));
+		$videoMetaTags = ['link', 'uri', 'name', 'description', 'duration', 'status', 'password'];
+		$videoData = wc_vimeo_get_set_video_item_transient($_POST['wc_vimeo_id']);
+		wc_vimeo_update_delete_post_meta($post_id, $tagPrefix.'id', $_POST['wc_vimeo_id']);
+		foreach ($videoMetaTags as $tag) {
+			wc_vimeo_update_delete_post_meta($post_id, $tagPrefix.$tag, $videoData->$tag);
 		}
-		if (isset($video->link)) {
-			update_post_meta($post_id, 'wc_vimeo_link', wc_clean($video->link));
-		}
-		if (isset($video->uri)) {
-			update_post_meta($post_id, 'wc_vimeo_uri', wc_clean($video->uri));
-		}
-		if (isset($video->description)) {
-			update_post_meta($post_id, 'wc_vimeo_description', wc_clean($video->description));
-		}
-		if (isset($video->status)) {
-			update_post_meta($post_id, 'wc_vimeo_status', wc_clean($video->status));
-		}
-		if (isset($video->password)) {
-			update_post_meta($post_id, 'wc_vimeo_password', wc_clean($video->password));
-		}
-		if (isset($video->duration)) {
-			update_post_meta($post_id, 'wc_vimeo_duration', wc_clean($video->duration));
-		}
-		update_post_meta($post_id, 'wc_vimeo_id', wc_clean($_POST['wc_vimeo_id']));
 	}
 }
 
