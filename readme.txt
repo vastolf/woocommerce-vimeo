@@ -1,6 +1,6 @@
 === Video Sales for Woocommerce with Vimeo ===
 Contributors: vincentastolfi
-Donate link: https://paypal.com/astolfivincent
+Donate link: https://www.paypal.com/paypalme2/astolfivincent
 Tags: vimeo, woocommerce, video, sell
 Requires at least: 4.6
 Tested up to: 5.3.2
@@ -17,7 +17,7 @@ This plugin & its author are in no way affiliated with Vimeo or WooCommerce; thi
 
 With Video Sales for Woocommerce with Vimeo, selling access to your Vimeo videos via WooCommerce has never been easier. Vimeo allows you to password protect your videos, and we can utilize this feature to allow us to sell premium access to those password protected videos!
 
-You can easily connect your Vimeo account to your WooCommerce site using Vimeo's free API. Once you've configured the plugin, you will be able to select videos from your Vimeo library when creating your products. 
+You can easily connect your Vimeo account to your WooCommerce site using Vimeo's free API. Once you've configured the plugin, you will be able to select videos from your Vimeo library when creating your products.
 
 Once your products have been associated with their respective videos, you can edit your WooCommerce email notifications & thank you messages in your theme and include the meta data of your video in payment confirmations to your users (examples of meta data would be
 the video's Name, Link, Password for access, etc).
@@ -68,7 +68,7 @@ One way is to create an email template in your theme. See the sample gist here: 
 
 Copy the content of the gist. In your theme (or child theme's) folder create a file at `/woocommerce/emails/customer-completed-order.php` and copy the contents of the gist into that file. So the full directory would be `/wp-content/themes/{your theme or child theme}/woocommerce/emails/customer-completed-order.php`
 
-This gist gives some examples of how to access the Video data in your confirmation email, but you could do something similar in the processing email or other confirmation emails. You can edit this file and reformat it to suit your styling tastes. 
+This gist gives some examples of how to access the Video data in your confirmation email, but you could do something similar in the processing email or other confirmation emails. You can edit this file and reformat it to suit your styling tastes.
 
 For more information about custom WooCommerce emails,  see the section called "Creating Custom Templates with Code" at [https://woocommerce.com/posts/how-to-customize-emails-in-woocommerce/](https://woocommerce.com/posts/how-to-customize-emails-in-woocommerce/)
 
@@ -88,11 +88,11 @@ If you've made a change to some video data at Vimeo, those changes may not be re
 
 To ensure that this plugin can work with other plugins that use meta data from the Product, a Vimeo video's data gets stored on each individual Product it gets associted with.
 
-For example, if you have a video at Vimeo with a name like "My Video" and you change it to "My Film", any Products that had the "My Video" video from Vimeo selected will need to have its meta data updated to reflect the name change.
+For example, if you have a video at Vimeo with a name like "My Video" and you change it to "My Film", any Products that had the "My Video" video from Vimeo selected will need to be updated when the Cron task runs for this plugin.
 
-Products with Vimeo videos set get checked for updates from video during the Cron task, which runs automatically on a set time interval, which you can set yourself (default is every 15 minutes). Settings for Cron are at [https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo](https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo) (see screenshot 2)
+Products with Vimeo videos get checked for updates from Vimeo during the Cron task, which runs automatically on a set time interval, and which you can set yourself (default is every 15 minutes). Settings for Cron are at [https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo](https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo) (see screenshot 2)
 
-When the Cron task runs, all video meta data on the Products that needs updating gets update.
+When the Cron task runs, all video meta data on the Products that needs updating gets updated. This shouldn't be too much of an issue unless you have an update from Vimeo you need reflected immediately on your site; in that case, run the cron manually on the WooCommerce > Settings > Vimeo page
 
 
 == Screenshots ==
