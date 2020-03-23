@@ -4,7 +4,7 @@ Donate link: https://paypal.com/astolfivincent
 Tags: vimeo, woocommerce, video, sell
 Requires at least: 4.6
 Tested up to: 5.3.2
-Stable tag: 0.0.2
+Stable tag: 0.0.3
 Requires PHP: 5.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
