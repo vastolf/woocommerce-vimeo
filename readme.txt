@@ -82,10 +82,23 @@ Note that depending on how many videos you have at Vimeo, making requests to get
 
 You can change the cache clear interval or clear the cache manually at [https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo](https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo) (see screenshot 2)
 
+= My video data is not updating with the changes I made at Vimeo =
+
+If you've made a change to some video data at Vimeo, those changes may not be reflected on your site immediately.
+
+To ensure that this plugin can work with other plugins that use meta data from the Product, a Vimeo video's data gets stored on each individual Product it gets associted with.
+
+For example, if you have a video at Vimeo with a name like "My Video" and you change it to "My Film", any Products that had the "My Video" video from Vimeo selected will need to have its meta data updated to reflect the name change.
+
+Products with Vimeo videos set get checked for updates from video during the Cron task, which runs automatically on a set time interval, which you can set yourself (default is every 15 minutes). Settings for Cron are at [https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo](https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo) (see screenshot 2)
+
+When the Cron task runs, all video meta data on the Products that needs updating gets update.
+
+
 == Screenshots ==
 
 1. Configurations page at https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo & config for Vimeo API
-2. Cache clearing option at https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo
+2. Cache & Cron options with manual triggers at https://your-site.com/wp-admin/admin.php?page=wc-settings&tab=vimeo
 3. Upload a video to Vimeo
 4. Set Privacy Options for video & password protect it
 5. Set Password for your video
@@ -101,6 +114,12 @@ You can change the cache clear interval or clear the cache manually at [https://
 = 0.0.2 =
 * vimeo/vimeo-api update
 
+= 0.0.3 =
+* Adding Cron functionality
+* Automatically updates product's video data from Vimeo based on cron interval
+* Configurable cron interval
+* Ability to run Cron manually
+
 == Upgrade Notice ==
 
 = 0.0.1 =
@@ -108,3 +127,6 @@ Plugin inception, original release
 
 = 0.0.2 =
 Vimeo made a major update to their PHP API, so we need to update or communication with the Vimeo API will be broken.
+
+= 0.0.3 =
+This update adds improvements to Vimeo data storage on products. It will ensure the plugin is more performant, and that Products will have the most up-to-date data from Vimeo as possible.

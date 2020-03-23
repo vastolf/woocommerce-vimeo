@@ -87,7 +87,7 @@ class WC_Settings_WooCommerce_Vimeo {
             array( 'type' => 'sectionend', 'id' => 'wc_vimeo_api_configuration' ),
 
             array(
-                'name' => __( 'Woocommerce Vimeo Cache Options', 'woocommerce-to-vimeo' ),
+                'name' => __( 'Cache Options', 'woocommerce-to-vimeo' ),
                 'type' => 'title',
                 'desc' => __('<p>The options below control caching of data requested from Vimeo. You can control how often your site re-requests data from Vimeo (a resource intensive task) and caches it, as well as clear the current cache.</p>
                               <div class="wc-vimeo__cache-clear-wrapper"><button id="woocommerce-vimeo-cache-clear-1" class="wc-vimeo__cache-clear button secondary">Clear Vimeo Cache</button><span>Warning: Clearing your Vimeo Data Cache will force your site to re-request all of your video data from Vimeo. You may need to do this because you have new or updated content at Vimeo that isn\'t yet showing up on your site/when adding Products. However, depending on how many videos you have, this can be a resourse intensive process.</span></div>', 'woocommerce'),
@@ -95,7 +95,7 @@ class WC_Settings_WooCommerce_Vimeo {
             ),
 
             array(
-                'name' => __( 'Vimeo cache duration (in minutes)', 'woocommerce-to-vimeo' ),
+                'name' => __( 'Vimeo data Cache duration (in minutes)', 'woocommerce-to-vimeo' ),
                 'type' => 'number',
                 'default' => '15',
                 'desc' => 'To increase performance, this plugin caches your Vimeo videos\' data for a set number of minutes, after which it is cleared, and will need to be re-requested from Vimeo. Set the number of minutes you\'d like between Vimeo data cache clears (default: 15).<br />',
@@ -104,6 +104,25 @@ class WC_Settings_WooCommerce_Vimeo {
             ),
 
             array( 'type' => 'sectionend', 'id' => 'wc_vimeo_cache_configuration' ),
+
+            array(
+                'name' => __( 'Cron Options', 'woocommerce-to-vimeo' ),
+                'type' => 'title',
+                'desc' => __('<p>The options below control the Cron task for this plugin. The Cron task updates your Products on a set interval to ensure they have the latest data from Vimeo. This is important in case, for example, the Name or Description of the video at Vimeo changes, as your Products need to be updated to reflect those changes.</p>
+                              <div class="wc-vimeo__cron-run-wrapper"><button id="woocommerce-vimeo-cron-run-1" class="wc-vimeo__cron-run button secondary">Run Vimeo Cron Task</button><span>Warning: This also runs a cache clear; see warning under Cache Options. To ensure this plugin\'s compatibility with other plugins that display post meta data, this plugin saves your videos\' data on each Product that have one selected. To manually trigger an update to ensure products have the most up to date data from Vimeo, use this.</span></div>', 'woocommerce'),
+                'id'   => 'wc_vimeo_cron_configuration'
+            ),
+
+            array(
+                'name' => __( 'Vimeo data Cron Interval (in minutes)', 'woocommerce-to-vimeo' ),
+                'type' => 'number',
+                'default' => '15',
+                'desc' => 'The Cron task runs automatically on a set interval (in minutes). Set a custom interval for how often your Products\' video data should be compared to the data from Vimeo & updated to reflect and updates from their platform. (default: 15).<br />',
+                'css'  => 'min-width:50px;',
+                'id'   => 'wc_settings_vimeo_cron_interval'
+            ),
+
+            array( 'type' => 'sectionend', 'id' => 'wc_vimeo_cron_configuration' ),
         );
       
         return apply_filters( 'wc_settings_vimeo', $settings );
@@ -113,37 +132,27 @@ class WC_Settings_WooCommerce_Vimeo {
 WC_Settings_WooCommerce_Vimeo::init();
 
 // Add a settings link on the plugin page
-function woocommerce_vimeo_add_settings_link( $links ) {
+function wc_vimeo_add_settings_link( $links ) {
     $settings_link = '<a href="admin.php?page=wc-settings&tab=vimeo">' . __( 'Settings' ) . '</a>';
     array_unshift( $links, $settings_link );
   	return $links;
 }
 $plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'woocommerce_vimeo_add_settings_link' );
+add_filter( "plugin_action_links_$plugin", 'wc_vimeo_add_settings_link' );
 
 // Handles the AJAX request triggered by the "Clear Vimeo Cache" button on the settings page
 // Deletes all transients related to woocommerce-vimeo
-function woocommerce_vimeo_ajax_action_function() {
+function wc_vimeo_ajax_action_function() {
     $reponse = array();
     if(!empty($_POST['clear']) && $_POST['clear'] == 'true'){
-        $options = woocommerce_vimeo_get_product_options();
-        $duration = woocommerce_vimeo_get_transient_duration() / 60;
-        if (false !== get_transient('woocommerce_vimeo_videos_main_transient')) {
-            delete_transient('woocommerce_vimeo_videos_main_transient');
-        }
-        foreach($options as $key => $value) {
-            $transientName = 'woocommerce_vimeo_video_'.$key;
-            if (false !== get_transient($transientName)) {
-                delete_transient($transientName);
-            }
-        }
-        $response['response'] = 'The Vimeo Data Cache has been cleared for your site. It will clear again automatically in '.$duration.' minutes.';
+        wc_vimeo_clear_all_transients(); // Clears all transients
+        $response['response'] = 'The Vimeo Data Cache has been cleared for your site. It will continue to clear automatically as it\'s been scheduled.';
     }
     header( "Content-Type: application/json" );
     echo json_encode($response);
     exit(); // do not remove
 }
 
-add_action('wp_ajax_wc_vimeo_cache_clear', 'woocommerce_vimeo_ajax_action_function');
+add_action('wp_ajax_wc_vimeo_cache_clear', 'wc_vimeo_ajax_action_function');
 
 ?>

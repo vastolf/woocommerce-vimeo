@@ -1,19 +1,39 @@
-.wc-vimeo__cache-clear-wrapper {
+.wc-vimeo__cache-clear-wrapper,
+.wc-vimeo__cron-run-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #ffdada;
     padding: 1rem;
-    color: #2f1313;
-    border: 1px solid #6f3634;
     border-radius: 3px;
     margin: 1.25rem 0 1rem;
 }
 
-.wp-core-ui button.wc-vimeo__cache-clear {
+.wc-vimeo__cache-clear-wrapper {
+    background: #ffdada;
+    color: #2f1313;
+    border: 1px solid #6f3634;
+}
+
+.wc-vimeo__cron-run-wrapper {
+    border: 1px solid #c3993c;
+    background: #fffef3;
+    color: #5d4002;
+}
+
+.wp-core-ui button.wc-vimeo__cache-clear,
+.wp-core-ui button.wc-vimeo__cron-run {
     margin-right: 1rem;
+}
+
+.wp-core-ui button.wc-vimeo__cache-clear {
     border: 1px solid #4e120f;
     background: #863935;
+    color: #fff;
+}
+
+.wp-core-ui button.wc-vimeo__cron-run {
+    border: 1px solid #694e12;
+    background: #bf861f;
     color: #fff;
 }
 
@@ -23,6 +43,14 @@
     border: 1px solid #7f3f3d;
     background: #b75854;
     color: #fff;
+}
+
+.wp-core-ui button.wc-vimeo__cron-run:hover,
+.wp-core-ui button.wc-vimeo__cron-run:active,
+.wp-core-ui button.wc-vimeo__cron-run:focus {
+    border: 1px solid #a98638;
+    background: #f5cc81;
+    color: #2f2309;
 }
 
 #woocommerce-product-data ul.wc-tabs li.vimeo_options a:before {
