@@ -64,7 +64,7 @@ Products with Vimeo videos selected have a lot of extra meta data associated wit
 
 This plugin works by setting meta data from the Vimeo video on the Product when you select a video. There are many ways to deliver this meta data to your users on purchase of a product.
 
-One way is to create an email template in your theme. See the sample gist here: [https://gist.github.com/astolfivincent/42cc9359d6b616675d70659e6de6f7a4](https://gist.github.com/astolfivincent/42cc9359d6b616675d70659e6de6f7a4)
+One way is to create an email template in your theme. See the sample gist here: [https://gist.github.com/vastolf/42cc9359d6b616675d70659e6de6f7a4](https://gist.github.com/vastolf/42cc9359d6b616675d70659e6de6f7a4)
 
 Copy the content of the gist. In your theme (or child theme's) folder create a file at `/woocommerce/emails/customer-completed-order.php` and copy the contents of the gist into that file. So the full directory would be `/wp-content/themes/{your theme or child theme}/woocommerce/emails/customer-completed-order.php`
 
