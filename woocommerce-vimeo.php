@@ -3,7 +3,7 @@
 *	Plugin Name: Video Sales for Woocommerce with Vimeo
 *	Plugin URI: https://www.nueue.net/
 *	Description: Allows you to connect your Vimeo account to your WooCommerce site, and sell access to your private, password protected videos at Vimeo to your customers.
-*	Version: 0.0.3
+*	Version: 0.0.4
 *	Author: Vincent Astolfi
 *   Author URI: https://nueue.net/
 *	Text Domain: woocommerce-vimeo

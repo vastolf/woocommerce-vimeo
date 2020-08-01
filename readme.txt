@@ -130,3 +130,6 @@ Vimeo made a major update to their PHP API, so we need to update or communicatio
 
 = 0.0.3 =
 This update adds improvements to Vimeo data storage on products. It will ensure the plugin is more performant, and that Products will have the most up-to-date data from Vimeo as possible.
+
+= 0.0.4 =
+This updates the Vimeo API and other dependencies.
