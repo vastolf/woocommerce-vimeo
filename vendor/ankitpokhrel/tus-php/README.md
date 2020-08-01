@@ -5,7 +5,7 @@
         <img alt="PHP Version" src="https://img.shields.io/badge/php-7.1.3%2B-brightgreen.svg?style=flat-square" />
     </a>
     <a href="https://travis-ci.org/ankitpokhrel/tus-php">
-        <img alt="Build Status" src="https://img.shields.io/travis/ankitpokhrel/tus-php/master.svg?style=flat-square" />
+        <img alt="Build Status" src="https://img.shields.io/travis/ankitpokhrel/tus-php/v1.svg?style=flat-square" />
     </a>
     <a href="https://scrutinizer-ci.com/g/ankitpokhrel/tus-php">
         <img alt="Code Coverage" src="https://img.shields.io/scrutinizer/coverage/g/ankitpokhrel/tus-php.svg?style=flat-square" />
@@ -100,6 +100,24 @@ location /files {
     try_files $uri $uri/ /server.php?$query_string;
 }
 ```
+
+A new config option [fastcgi_request_buffering](http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_request_buffering) is available since nginx 1.7.11.
+When buffering is enabled, the entire request body is read from the client before sending the request to a FastCGI server. Disabling this option might help with timeouts during the upload.
+Furthermore, it helps if you’re running out of disc space on the tmp partition of your system.
+
+If you do not turn off `fastcgi_request_buffering` and you use `fastcgi`, you will not be able to resume uploads because nginx will not give the request back to PHP until the entire file is uploaded.
+
+```nginx
+location ~ \.php$ {
+    # ...
+
+    fastcgi_request_buffering off; # Disable request buffering
+    
+    # ...
+}
+```
+
+A sample nginx configuration can be found [here](docker/server/configs/default.conf).
 
 ###### Apache
 ```apache

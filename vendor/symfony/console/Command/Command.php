@@ -433,8 +433,6 @@ class Command
      * This feature should be used only when creating a long process command,
      * like a daemon.
      *
-     * PHP 5.5+ or the proctitle PECL library is required
-     *
      * @param string $title The process title
      *
      * @return $this
@@ -559,7 +557,7 @@ class Command
     public function setAliases($aliases)
     {
         if (!\is_array($aliases) && !$aliases instanceof \Traversable) {
-            throw new InvalidArgumentException('$aliases must be an array or an instance of \Traversable');
+            throw new InvalidArgumentException('$aliases must be an array or an instance of \Traversable.');
         }
 
         foreach ($aliases as $alias) {
